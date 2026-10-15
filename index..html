@@ -1,0 +1,760 @@
+<!DOCTYPE html>
+<html lang="th" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Niyata Homlek | Academic Portfolio</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Prompt & Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Prompt:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#fff1f2',
+                            100: '#ffe4e6',
+                            200: '#fecdd3',
+                            300: '#fda4af',
+                            400: '#fb7185',
+                            500: '#f43f5e',
+                            600: '#e11d48',
+                            700: '#be123c',
+                        },
+                        accent: {
+                            pink: '#ec4899',
+                            red: '#ef4444',
+                            softBg: '#fafafa',
+                            darkBg: '#0f172a',
+                            darkCard: '#1e293b'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Prompt', 'Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Prompt', sans-serif;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        .dark .glass-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .custom-gradient-text {
+            background: linear-gradient(135deg, #f43f5e 0%, #ec4899 50%, #e11d48 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 dark:bg-slate-900 dark:text-slate-100 transition-colors duration-300 min-h-screen flex flex-col">
+
+    <!-- Toast Notification -->
+    <div id="toast" class="fixed bottom-5 right-5 z-50 transform translate-y-20 opacity-0 transition-all duration-300 bg-slate-900 text-white dark:bg-rose-600 dark:text-white px-5 py-3 rounded-2xl shadow-xl flex items-center space-x-3 pointer-events-none">
+        <i class="fa-solid fa-circle-check text-rose-400 dark:text-white"></i>
+        <span id="toast-message">คัดลอกข้อความเรียบร้อยแล้ว</span>
+    </div>
+
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-40 w-full backdrop-blur-md bg-white/80 dark:bg-slate-900/80 border-b border-slate-200/60 dark:border-slate-800 transition-colors">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-2 group">
+                <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-rose-500 to-pink-500 flex items-center justify-center text-white font-bold text-lg shadow-md group-hover:scale-105 transition-transform">
+                    N
+                </div>
+                <span class="font-bold text-lg tracking-tight custom-gradient-text">Niyata.H</span>
+            </a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center space-x-1 lg:space-x-2 text-sm font-medium">
+                <a href="#about" class="px-3 py-2 rounded-lg hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-slate-800/60 transition-all">เกี่ยวกับ</a>
+                <a href="#education" class="px-3 py-2 rounded-lg hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-slate-800/60 transition-all">ประวัติการศึกษา</a>
+                <a href="#skills-experience" class="px-3 py-2 rounded-lg hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-slate-800/60 transition-all">ทักษะและประสบการณ์</a>
+                <a href="#personal" class="px-3 py-2 rounded-lg hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-slate-800/60 transition-all">ตัวตนและเป้าหมาย</a>
+                <a href="#contact" class="px-3 py-2 rounded-lg hover:text-rose-600 dark:hover:text-rose-400 hover:bg-rose-50 dark:hover:bg-slate-800/60 transition-all">การติดต่อ</a>
+            </nav>
+
+            <!-- Actions Controls -->
+            <div class="flex items-center gap-2">
+                <!-- Deploy Modal Toggle Button -->
+                <button onclick="toggleModal('github-modal')" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium text-slate-700 dark:text-slate-200 bg-slate-100 dark:bg-slate-800 hover:bg-rose-100 dark:hover:bg-rose-950/40 hover:text-rose-600 dark:hover:text-rose-400 rounded-lg transition-all border border-slate-200 dark:border-slate-700">
+                    <i class="fa-brands fa-github text-sm"></i>
+                    <span>วิธีอัปโหลด GitHub Pages</span>
+                </button>
+
+                <!-- Theme Toggle Button -->
+                <button id="theme-toggle" class="p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors" aria-label="Toggle theme">
+                    <i id="theme-icon" class="fa-solid fa-moon text-lg"></i>
+                </button>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 rounded-xl text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 transition-colors">
+                    <i class="fa-solid fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Navigation Menu -->
+        <div id="mobile-menu" class="hidden md:hidden border-b border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900 px-4 pt-2 pb-4 space-y-1">
+            <a href="#about" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-rose-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200">เกี่ยวกับ</a>
+            <a href="#education" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-rose-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200">ประวัติการศึกษา</a>
+            <a href="#skills-experience" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-rose-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200">ทักษะและประสบการณ์</a>
+            <a href="#personal" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-rose-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200">ตัวตนและเป้าหมาย</a>
+            <a href="#contact" class="block px-3 py-2 rounded-lg text-base font-medium hover:bg-rose-50 dark:hover:bg-slate-800 text-slate-700 dark:text-slate-200">การติดต่อ</a>
+            <button onclick="toggleModal('github-modal')" class="w-full text-left mt-2 flex items-center justify-between px-3 py-2 rounded-lg text-sm font-medium bg-rose-50 dark:bg-rose-950/40 text-rose-600 dark:text-rose-400">
+                <span class="flex items-center gap-2"><i class="fa-brands fa-github"></i> วิธีสอนขึ้น GitHub Pages</span>
+                <i class="fa-solid fa-chevron-right text-xs"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="flex-grow">
+        <!-- Hero Section / About -->
+        <section id="about" class="pt-12 pb-16 md:pt-20 md:pb-24 relative overflow-hidden">
+            <!-- Background Decorative Blobs -->
+            <div class="absolute top-1/4 left-1/2 -translate-x-1/2 w-[500px] h-[500px] bg-rose-200/40 dark:bg-rose-900/15 rounded-full blur-3xl -z-10 pointer-events-none"></div>
+            <div class="absolute top-10 right-10 w-72 h-72 bg-pink-200/30 dark:bg-pink-900/10 rounded-full blur-2xl -z-10 pointer-events-none"></div>
+
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+                    
+                    <!-- Profile Image Box -->
+                    <div class="lg:col-span-5 flex flex-col items-center">
+                        <div class="relative group">
+                            <!-- Gradient Frame Outline -->
+                            <div class="absolute -inset-1 bg-gradient-to-r from-rose-500 via-pink-500 to-rose-400 rounded-3xl blur opacity-40 group-hover:opacity-80 transition duration-500"></div>
+                            
+                            <!-- Image Container -->
+                            <div class="relative w-64 h-80 sm:w-72 sm:h-96 rounded-2xl overflow-hidden shadow-2xl border-4 border-white dark:border-slate-800 bg-slate-200 dark:bg-slate-800">
+                                <img src="profile.jpg" 
+                                     alt="นางสาวนิยตา หอมเหล็ก" 
+                                     class="w-full h-full object-cover object-center transform group-hover:scale-105 transition duration-500"
+                                     onerror="this.onerror=null; this.src='https://placehold.co/600x800/fecdd3/be123c?text=Niyata+Homlek';">
+                            </div>
+
+                            <!-- Badge -->
+                            <div class="absolute -bottom-4 -right-2 bg-white dark:bg-slate-800 px-4 py-2 rounded-2xl shadow-lg border border-slate-100 dark:border-slate-700 flex items-center gap-2">
+                                <span class="relative flex h-3 w-3">
+                                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-rose-400 opacity-75"></span>
+                                  <span class="relative inline-flex rounded-full h-3 w-3 bg-rose-500"></span>
+                                </span>
+                                <span class="text-xs font-medium text-slate-700 dark:text-slate-200">นักศึกษาปริญญาตรี</span>
+                            </div>
+                        </div>
+
+                        <!-- Quick Badges below Image -->
+                        <div class="mt-8 flex flex-wrap justify-center gap-2">
+                            <span class="px-3 py-1 rounded-full text-xs font-medium bg-rose-100 dark:bg-rose-950/60 text-rose-700 dark:text-rose-300 border border-rose-200/50 dark:border-rose-800/40">
+                                <i class="fa-solid fa-droplet text-rose-500 mr-1"></i> กรุ๊ปเลือด O
+                            </span>
+                            <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                                อายุ 19 ปี
+                            </span>
+                            <span class="px-3 py-1 rounded-full text-xs font-medium bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-300">
+                                สูง 159 ซม. / 63 กก.
+                            </span>
+                        </div>
+                    </div>
+
+                    <!-- Intro Info Text -->
+                    <div class="lg:col-span-7 text-center lg:text-left space-y-6">
+                        <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-rose-50 dark:bg-rose-950/50 border border-rose-200/60 dark:border-rose-900/50 text-rose-600 dark:text-rose-300 text-xs font-semibold">
+                            <i class="fa-solid fa-graduation-cap"></i> Academic Portfolio
+                        </div>
+                        
+                        <div class="space-y-2">
+                            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold tracking-tight text-slate-900 dark:text-white">
+                                นางสาวนิยตา หอมเหล็ก
+                            </h1>
+                            <p class="text-lg sm:text-xl font-medium text-rose-600 dark:text-rose-400">
+                                สาขาวิชาสาธารณสุขชุมชน
+                            </p>
+                        </div>
+
+                        <p class="text-slate-600 dark:text-slate-300 text-sm sm:text-base leading-relaxed max-w-2xl">
+                            วิทยาลัยการสาธารณสุขสิรินธร จังหวัดขอนแก่น <br class="hidden sm:inline">
+                            คณะสาธารณสุขศาสตร์และสหเวชศาสตร์ สถาบันพระบรมราชชนก กระทรวงสาธารณสุข
+                        </p>
+
+                        <!-- Motto Highlight Card -->
+                        <div class="p-4 rounded-2xl bg-gradient-to-r from-rose-50/80 to-pink-50/50 dark:from-slate-800/80 dark:to-slate-800/40 border border-rose-100 dark:border-slate-700/60 text-left">
+                            <div class="flex items-start gap-3">
+                                <i class="fa-solid fa-quote-left text-2xl text-rose-400 dark:text-rose-500 mt-1"></i>
+                                <div>
+                                    <p class="text-xs font-semibold text-rose-600 dark:text-rose-400 uppercase tracking-wider mb-0.5">คติประจำใจ (Motto)</p>
+                                    <p class="text-sm sm:text-base font-medium text-slate-800 dark:text-slate-200 italic">
+                                        "อย่าทิ้งความฝัน เพียงเพราะเราไม่มีเพื่อน"
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Action Buttons -->
+                        <div class="pt-2 flex flex-wrap gap-3 justify-center lg:justify-start">
+                            <a href="#contact" class="px-6 py-3 rounded-xl bg-gradient-to-r from-rose-500 to-pink-600 hover:from-rose-600 hover:to-pink-700 text-white font-medium text-sm shadow-lg shadow-rose-500/20 hover:shadow-rose-500/30 transition-all flex items-center gap-2">
+                                <i class="fa-solid fa-envelope"></i> ติดต่อฉัน
+                            </a>
+                            <button onclick="copyToClipboard('69202302049@scphkk.ac.th', 'คัดลอกอีเมลเรียบร้อยแล้ว!')" class="px-5 py-3 rounded-xl bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 hover:border-rose-300 dark:hover:border-rose-500 text-slate-700 dark:text-slate-200 font-medium text-sm shadow-sm transition-all flex items-center gap-2">
+                                <i class="fa-regular fa-copy text-rose-500"></i> คัดลอก Email
+                            </button>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Education Timeline Section -->
+        <section id="education" class="py-16 bg-white dark:bg-slate-900/50 border-y border-slate-100 dark:border-slate-800">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-xs font-semibold text-rose-600 dark:text-rose-400 uppercase tracking-widest">Education Background</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">ประวัติการศึกษา</h2>
+                    <div class="w-12 h-1 bg-gradient-to-r from-rose-500 to-pink-500 mx-auto mt-3 rounded-full"></div>
+                </div>
+
+                <div class="relative max-w-3xl mx-auto">
+                    <!-- Vertical Timeline Line -->
+                    <div class="absolute left-4 sm:left-1/2 top-0 bottom-0 w-0.5 bg-gradient-to-b from-rose-400 via-rose-200 to-slate-200 dark:from-rose-500 dark:via-rose-900/40 dark:to-slate-800 transform sm:-translate-x-1/2"></div>
+
+                    <div class="space-y-8 sm:space-y-12 relative">
+                        
+                        <!-- Timeline Item 1: Degree (Present) -->
+                        <div class="relative flex flex-col sm:flex-row items-start group">
+                            <div class="flex items-center sm:w-1/2 sm:justify-end sm:pr-8 mb-2 sm:mb-0">
+                                <div class="text-left sm:text-right pl-10 sm:pl-0">
+                                    <span class="inline-block px-3 py-1 text-xs font-semibold rounded-full bg-rose-500 text-white shadow-sm mb-1">
+                                        ปัจจุบัน
+                                    </span>
+                                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">ระดับปริญญาตรี</h3>
+                                    <p class="text-xs text-rose-600 dark:text-rose-400 font-medium">สาขาวิชาสาธารณสุขชุมชน</p>
+                                </div>
+                            </div>
+                            <!-- Icon Node -->
+                            <div class="absolute left-0 sm:left-1/2 top-1 sm:top-2 -translate-x-0 sm:-translate-x-1/2 w-8 h-8 rounded-full bg-rose-500 text-white border-4 border-white dark:border-slate-900 shadow-md flex items-center justify-center z-10 text-xs">
+                                <i class="fa-solid fa-university"></i>
+                            </div>
+                            <!-- Details Card -->
+                            <div class="pl-10 sm:pl-8 sm:w-1/2">
+                                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-700/60 shadow-sm hover:shadow-md transition-shadow">
+                                    <p class="font-semibold text-slate-800 dark:text-slate-100 text-sm">วิทยาลัยการสาธารณสุขสิรินธร จังหวัดขอนแก่น</p>
+                                    <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">คณะสาธารณสุขศาสตร์และสหเวชศาสตร์ สถาบันพระบรมราชชนก</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Item 2: High School Upper -->
+                        <div class="relative flex flex-col sm:flex-row items-start group">
+                            <div class="flex items-center sm:w-1/2 sm:justify-end sm:pr-8 mb-2 sm:mb-0 sm:order-1 order-1">
+                                <div class="text-left sm:text-right pl-10 sm:pl-0">
+                                    <span class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 mb-1">
+                                        ปีการศึกษา 2565 - 2567
+                                    </span>
+                                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">มัธยมศึกษาตอนปลาย (ม.4 - ม.6)</h3>
+                                </div>
+                            </div>
+                            <!-- Icon Node -->
+                            <div class="absolute left-0 sm:left-1/2 top-1 sm:top-2 -translate-x-0 sm:-translate-x-1/2 w-8 h-8 rounded-full bg-rose-400 text-white border-4 border-white dark:border-slate-900 shadow-md flex items-center justify-center z-10 text-xs">
+                                <i class="fa-solid fa-school"></i>
+                            </div>
+                            <!-- Details Card -->
+                            <div class="pl-10 sm:pl-8 sm:w-1/2 sm:order-2 order-2">
+                                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-700/60 shadow-sm hover:shadow-md transition-shadow">
+                                    <p class="font-semibold text-slate-800 dark:text-slate-100 text-sm">โรงเรียนเตรียมอุดมศึกษาภาคตะวันออกเฉียงเหนือ</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Item 3: High School Lower -->
+                        <div class="relative flex flex-col sm:flex-row items-start group">
+                            <div class="flex items-center sm:w-1/2 sm:justify-end sm:pr-8 mb-2 sm:mb-0">
+                                <div class="text-left sm:text-right pl-10 sm:pl-0">
+                                    <span class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 mb-1">
+                                        ปีการศึกษา 2561 - 2564
+                                    </span>
+                                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">มัธยมศึกษาตอนต้น (ม.1 - ม.3)</h3>
+                                </div>
+                            </div>
+                            <!-- Icon Node -->
+                            <div class="absolute left-0 sm:left-1/2 top-1 sm:top-2 -translate-x-0 sm:-translate-x-1/2 w-8 h-8 rounded-full bg-rose-300 dark:bg-rose-700 text-white border-4 border-white dark:border-slate-900 shadow-md flex items-center justify-center z-10 text-xs">
+                                <i class="fa-solid fa-book-open"></i>
+                            </div>
+                            <!-- Details Card -->
+                            <div class="pl-10 sm:pl-8 sm:w-1/2">
+                                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-700/60 shadow-sm hover:shadow-md transition-shadow">
+                                    <p class="font-semibold text-slate-800 dark:text-slate-100 text-sm">โรงเรียนบ้านง่อนหนองพะเนาว์มิตรภาพที่ 126</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Timeline Item 4: Primary School -->
+                        <div class="relative flex flex-col sm:flex-row items-start group">
+                            <div class="flex items-center sm:w-1/2 sm:justify-end sm:pr-8 mb-2 sm:mb-0">
+                                <div class="text-left sm:text-right pl-10 sm:pl-0">
+                                    <span class="inline-block px-3 py-1 text-xs font-medium rounded-full bg-slate-200 dark:bg-slate-700 text-slate-700 dark:text-slate-300 mb-1">
+                                        ปีการศึกษา 2552 - 2560
+                                    </span>
+                                    <h3 class="text-base sm:text-lg font-bold text-slate-900 dark:text-white">ประถมศึกษา (ป.1 - ป.6)</h3>
+                                </div>
+                            </div>
+                            <!-- Icon Node -->
+                            <div class="absolute left-0 sm:left-1/2 top-1 sm:top-2 -translate-x-0 sm:-translate-x-1/2 w-8 h-8 rounded-full bg-slate-300 dark:bg-slate-600 text-white border-4 border-white dark:border-slate-900 shadow-md flex items-center justify-center z-10 text-xs">
+                                <i class="fa-solid fa-shapes"></i>
+                            </div>
+                            <!-- Details Card -->
+                            <div class="pl-10 sm:pl-8 sm:w-1/2">
+                                <div class="p-4 rounded-2xl bg-slate-50 dark:bg-slate-800/80 border border-slate-100 dark:border-slate-700/60 shadow-sm hover:shadow-md transition-shadow">
+                                    <p class="font-semibold text-slate-800 dark:text-slate-100 text-sm">โรงเรียนภูพานหลวง</p>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Skills & Experience Section -->
+        <section id="skills-experience" class="py-16">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                    
+                    <!-- Special Skills -->
+                    <div>
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 rounded-2xl bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-lg">
+                                <i class="fa-solid fa-star"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">ทักษะและความสามารถพิเศษ</h2>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Special Talent & Soft Skills</p>
+                            </div>
+                        </div>
+
+                        <div class="grid grid-cols-1 sm:grid-cols-3 gap-4">
+                            <!-- Skill 1 -->
+                            <div class="p-5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700/60 shadow-sm hover:border-rose-300 dark:hover:border-rose-500/50 transition-all text-center group">
+                                <div class="w-12 h-12 mx-auto rounded-full bg-rose-50 dark:bg-rose-900/30 text-rose-500 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-person-dots-from-line"></i>
+                                </div>
+                                <h3 class="font-semibold text-slate-800 dark:text-slate-100 text-sm">รำไทย</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">ศิลปวัฒนธรรมการแสดง</p>
+                            </div>
+
+                            <!-- Skill 2 -->
+                            <div class="p-5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700/60 shadow-sm hover:border-rose-300 dark:hover:border-rose-500/50 transition-all text-center group">
+                                <div class="w-12 h-12 mx-auto rounded-full bg-rose-50 dark:bg-rose-900/30 text-rose-500 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-utensils"></i>
+                                </div>
+                                <h3 class="font-semibold text-slate-800 dark:text-slate-100 text-sm">ทำอาหาร</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">การประกอบอาหาร</p>
+                            </div>
+
+                            <!-- Skill 3 -->
+                            <div class="p-5 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700/60 shadow-sm hover:border-rose-300 dark:hover:border-rose-500/50 transition-all text-center group">
+                                <div class="w-12 h-12 mx-auto rounded-full bg-rose-50 dark:bg-rose-900/30 text-rose-500 flex items-center justify-center text-xl mb-3 group-hover:scale-110 transition-transform">
+                                    <i class="fa-solid fa-music"></i>
+                                </div>
+                                <h3 class="font-semibold text-slate-800 dark:text-slate-100 text-sm">เล่นดนตรีไทย</h3>
+                                <p class="text-xs text-slate-500 dark:text-slate-400 mt-1">เครื่องดนตรีไทย</p>
+                            </div>
+                        </div>
+
+                        <!-- Academic Focus Tag -->
+                        <div class="mt-6 p-4 rounded-2xl bg-slate-100 dark:bg-slate-800/50 border border-slate-200/60 dark:border-slate-700 text-xs text-slate-600 dark:text-slate-300 flex items-center gap-3">
+                            <i class="fa-solid fa-heart-pulse text-rose-500 text-lg"></i>
+                            <span>มุ่งมั่นศึกษาด้านการส่งเสริมสุขภาพชุมชนและการบริหารจัดการสาธารณสุขเพื่อประชาชน</span>
+                        </div>
+                    </div>
+
+                    <!-- Work Experience -->
+                    <div>
+                        <div class="flex items-center gap-3 mb-6">
+                            <div class="w-10 h-10 rounded-2xl bg-rose-100 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center font-bold text-lg">
+                                <i class="fa-solid fa-briefcase"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-xl sm:text-2xl font-bold text-slate-900 dark:text-white">ประสบการณ์การทำงาน</h2>
+                                <p class="text-xs text-slate-500 dark:text-slate-400">Work & Part-time Experience</p>
+                            </div>
+                        </div>
+
+                        <div class="space-y-3">
+                            <!-- Job 1 -->
+                            <div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700/60 shadow-sm flex items-center justify-between hover:shadow-md transition-shadow">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-10 h-10 rounded-xl bg-pink-100 dark:bg-pink-950/50 text-pink-600 dark:text-pink-400 flex items-center justify-center">
+                                        <i class="fa-solid fa-glass-water"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-slate-800 dark:text-slate-100 text-sm">พนักงานร้านน้ำปั่น</h3>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400">ขายและจัดเตรียมเครื่องดื่มสุขภาพ/น้ำปั่น</p>
+                                    </div>
+                                </div>
+                                <span class="px-2.5 py-1 text-[11px] font-medium rounded-lg bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">
+                                    Part-time
+                                </span>
+                            </div>
+
+                            <!-- Job 2 -->
+                            <div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700/60 shadow-sm flex items-center justify-between hover:shadow-md transition-shadow">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-10 h-10 rounded-xl bg-rose-100 dark:bg-rose-950/50 text-rose-600 dark:text-rose-400 flex items-center justify-center">
+                                        <i class="fa-solid fa-bowl-food"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-slate-800 dark:text-slate-100 text-sm">พนักงานร้านก๋วยเตี๋ยว</h3>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400">บริการลูกค้า ตระเตรียมวัตถุดิบและจัดการหน้าร้าน</p>
+                                    </div>
+                                </div>
+                                <span class="px-2.5 py-1 text-[11px] font-medium rounded-lg bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">
+                                    Part-time
+                                </span>
+                            </div>
+
+                            <!-- Job 3 -->
+                            <div class="p-4 rounded-2xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700/60 shadow-sm flex items-center justify-between hover:shadow-md transition-shadow">
+                                <div class="flex items-center gap-3.5">
+                                    <div class="w-10 h-10 rounded-xl bg-orange-100 dark:bg-orange-950/50 text-orange-600 dark:text-orange-400 flex items-center justify-center">
+                                        <i class="fa-solid fa-utensils"></i>
+                                    </div>
+                                    <div>
+                                        <h3 class="font-semibold text-slate-800 dark:text-slate-100 text-sm">พนักงานร้านอาหาร</h3>
+                                        <p class="text-xs text-slate-500 dark:text-slate-400">ดูแลบริการลูกค้า การทำงานร่วมกับทีมในครัว</p>
+                                    </div>
+                                </div>
+                                <span class="px-2.5 py-1 text-[11px] font-medium rounded-lg bg-slate-100 dark:bg-slate-700/60 text-slate-600 dark:text-slate-300">
+                                    Part-time
+                                </span>
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Personal Life & Preferences Section -->
+        <section id="personal" class="py-16 bg-white dark:bg-slate-900/50 border-y border-slate-100 dark:border-slate-800">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-xs font-semibold text-rose-600 dark:text-rose-400 uppercase tracking-widest">Personal Life</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">เกี่ยวกับตัวฉันและเป้าหมายชีวิต</h2>
+                    <div class="w-12 h-1 bg-gradient-to-r from-rose-500 to-pink-500 mx-auto mt-3 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    
+                    <!-- Likes Card -->
+                    <div class="p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/60 space-y-4">
+                        <div class="w-10 h-10 rounded-2xl bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-300 flex items-center justify-center text-lg font-bold">
+                            <i class="fa-solid fa-face-smile"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">สิ่งที่ชอบ (Likes)</h3>
+                        <ul class="space-y-2.5 text-sm text-slate-600 dark:text-slate-300">
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-person-walking text-rose-500"></i>
+                                <span>ชอบเดินเที่ยว พักผ่อนหย่อนใจ</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-drumstick-bite text-rose-500"></i>
+                                <span>ชอบกินข้าวมันไก่</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-pepper-hot text-rose-500"></i>
+                                <span>ชอบทานหม่าล่า</span>
+                            </li>
+                            <li class="flex items-center gap-2">
+                                <i class="fa-solid fa-leaf text-rose-500"></i>
+                                <span>ชอบกินกล้วย</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <!-- Favorite Colors Card -->
+                    <div class="p-6 rounded-3xl bg-slate-50 dark:bg-slate-800/60 border border-slate-100 dark:border-slate-700/60 space-y-4">
+                        <div class="w-10 h-10 rounded-2xl bg-rose-100 dark:bg-rose-900/40 text-rose-600 dark:text-rose-300 flex items-center justify-center text-lg font-bold">
+                            <i class="fa-solid fa-palette"></i>
+                        </div>
+                        <h3 class="text-lg font-bold text-slate-900 dark:text-white">สีที่ชอบ (Favorite Colors)</h3>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">โทนสีที่สะท้อนความแจ่มใสและความมั่นใจ</p>
+                        <div class="flex items-center gap-4 pt-2">
+                            <!-- Color 1 -->
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-pink-400 shadow-md ring-2 ring-pink-200 dark:ring-pink-900"></div>
+                                <span class="text-sm font-medium text-slate-700 dark:text-slate-200">สีชมพู</span>
+                            </div>
+                            <!-- Color 2 -->
+                            <div class="flex items-center gap-2">
+                                <div class="w-8 h-8 rounded-full bg-red-500 shadow-md ring-2 ring-red-200 dark:ring-red-900"></div>
+                                <span class="text-sm font-medium text-slate-700 dark:text-slate-200">สีแดง</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Life Goal Card -->
+                    <div class="p-6 rounded-3xl bg-gradient-to-br from-rose-500 to-pink-600 text-white shadow-xl space-y-4">
+                        <div class="w-10 h-10 rounded-2xl bg-white/20 text-white flex items-center justify-center text-lg font-bold backdrop-blur-md">
+                            <i class="fa-solid fa-bullseye"></i>
+                        </div>
+                        <h3 class="text-lg font-bold">เป้าหมายในชีวิต (Life Goal)</h3>
+                        <p class="text-rose-100 text-sm leading-relaxed">
+                            "ตั้งใจศึกษาเล่าเรียน พัฒนาศักยภาพตนเองเพื่อความสำเร็จ อยากมีความมั่งคั่งสร้างรายได้ และมีหน้าที่การงานที่มั่นคงในอนาคต"
+                        </p>
+                        <div class="pt-2 flex items-center gap-2 text-xs text-rose-200">
+                            <i class="fa-solid fa-chart-line"></i>
+                            <span>เติบโตอย่างมั่นคงในสายงานสาธารณสุข</span>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-16">
+            <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+                
+                <div class="text-center max-w-2xl mx-auto mb-12">
+                    <span class="text-xs font-semibold text-rose-600 dark:text-rose-400 uppercase tracking-widest">Contact Information</span>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 dark:text-white mt-1">ข้อมูลการติดต่อ</h2>
+                    <div class="w-12 h-1 bg-gradient-to-r from-rose-500 to-pink-500 mx-auto mt-3 rounded-full"></div>
+                </div>
+
+                <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+                    
+                    <!-- Email & Quick Details -->
+                    <div class="lg:col-span-5 space-y-4">
+                        <!-- Email Card -->
+                        <div class="p-6 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700/60 shadow-sm hover:border-rose-300 dark:hover:border-rose-500/50 transition-all">
+                            <div class="flex items-center gap-4">
+                                <div class="w-12 h-12 rounded-2xl bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center text-xl">
+                                    <i class="fa-solid fa-envelope"></i>
+                                </div>
+                                <div class="flex-grow min-w-0">
+                                    <p class="text-xs text-slate-400 font-medium uppercase">อีเมลนักศึกษา (Email)</p>
+                                    <a href="mailto:69202302049@scphkk.ac.th" class="text-sm font-semibold text-slate-800 dark:text-slate-100 truncate block hover:text-rose-600 dark:hover:text-rose-400">
+                                        69202302049@scphkk.ac.th
+                                    </a>
+                                </div>
+                                <button onclick="copyToClipboard('69202302049@scphkk.ac.th', 'คัดลอกอีเมลแล้ว!')" class="p-2 text-slate-400 hover:text-rose-600 dark:hover:text-rose-400 rounded-lg" title="คัดลอกอีเมล">
+                                    <i class="fa-regular fa-copy"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Institute Info Card -->
+                        <div class="p-6 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700/60 shadow-sm space-y-3">
+                            <div class="flex items-center gap-3">
+                                <i class="fa-solid fa-building-columns text-rose-500"></i>
+                                <h3 class="font-bold text-slate-800 dark:text-slate-100 text-sm">สังกัดสถาบัน</h3>
+                            </div>
+                            <p class="text-xs text-slate-600 dark:text-slate-300 leading-relaxed">
+                                สาขาวิชาสาธารณสุขชุมชน วิทยาลัยการสาธารณสุขสิรินธร จังหวัดขอนแก่น <br>
+                                คณะสาธารณสุขศาสตร์และสหเวชศาสตร์ สถาบันพระบรมราชชนก กระทรวงสาธารณสุข
+                            </p>
+                        </div>
+                    </div>
+
+                    <!-- Address Box -->
+                    <div class="lg:col-span-7 p-6 sm:p-8 rounded-3xl bg-white dark:bg-slate-800 border border-slate-100 dark:border-slate-700/60 shadow-sm">
+                        <div class="flex items-center gap-3 mb-4">
+                            <div class="w-10 h-10 rounded-2xl bg-rose-50 dark:bg-rose-950/60 text-rose-600 dark:text-rose-400 flex items-center justify-center text-lg">
+                                <i class="fa-solid fa-location-dot"></i>
+                            </div>
+                            <div>
+                                <h3 class="font-bold text-slate-900 dark:text-white text-base">ที่อยู่ติดต่อ (Address)</h3>
+                                <p class="text-xs text-slate-400">สถานที่ติดต่อปัจจุบัน</p>
+                            </div>
+                        </div>
+
+                        <p class="text-slate-700 dark:text-slate-200 text-sm leading-relaxed mb-6">
+                            90/1 หมู่ 4 ถนนอนามัย ตำบลในเมือง อำเภอเมืองขอนแก่น จังหวัดขอนแก่น 40000
+                        </p>
+
+                        <div class="pt-4 border-t border-slate-100 dark:border-slate-700/60 flex flex-wrap items-center justify-between gap-4">
+                            <div class="flex items-center gap-2 text-xs text-slate-500 dark:text-slate-400">
+                                <i class="fa-solid fa-map-pin text-rose-500"></i>
+                                <span>อ.เมืองขอนแก่น จ.ขอนแก่น</span>
+                            </div>
+                            <button onclick="copyToClipboard('90/1 หมู่ 4 ถนนอนามัย ตำบลในเมือง อำเภอเมืองขอนแก่น จังหวัดขอนแก่น 40000', 'คัดลอกที่อยู่แล้ว!')" class="text-xs font-medium text-rose-600 dark:text-rose-400 hover:underline flex items-center gap-1">
+                                <i class="fa-regular fa-copy"></i> คัดลอกที่อยู่ทั้งหมด
+                            </button>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800 py-8">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+            <p class="text-xs text-slate-500 dark:text-slate-400 text-center sm:text-left">
+                © 2026 Niyata Homlek. Academic Portfolio. All rights reserved.
+            </p>
+            <div class="flex items-center space-x-4 text-xs text-slate-500 dark:text-slate-400">
+                <button onclick="toggleModal('github-modal')" class="hover:text-rose-600 dark:hover:text-rose-400 transition-colors">
+                    <i class="fa-brands fa-github"></i> คู่มือ GitHub Pages
+                </button>
+            </div>
+        </div>
+    </footer>
+
+    <!-- GitHub Pages Modal -->
+    <div id="github-modal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300">
+        <div class="bg-white dark:bg-slate-800 rounded-3xl max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 shadow-2xl border border-slate-200 dark:border-slate-700 relative transform scale-95 transition-transform duration-300 modal-content">
+            <!-- Close Button -->
+            <button onclick="toggleModal('github-modal')" class="absolute top-5 right-5 text-slate-400 hover:text-slate-600 dark:hover:text-white p-2">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+
+            <div class="flex items-center gap-3 mb-4">
+                <div class="w-10 h-10 rounded-2xl bg-slate-900 text-white flex items-center justify-center text-xl">
+                    <i class="fa-brands fa-github"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-slate-900 dark:text-white">ขั้นตอนการนำขึ้น GitHub Pages</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">วิธีเปิดใช้งานเว็บไซต์ Portfolio ออนไลน์ฟรีด้วย GitHub</p>
+                </div>
+            </div>
+
+            <div class="space-y-4 text-sm text-slate-600 dark:text-slate-300">
+                <div class="p-4 rounded-2xl bg-rose-50 dark:bg-rose-950/40 border border-rose-100 dark:border-rose-900/40 text-xs text-rose-800 dark:text-rose-300">
+                    <i class="fa-solid fa-circle-info mr-1"></i> <strong>ข้อแนะนำ:</strong> ตั้งชื่อไฟล์หลักนี้ว่า <code class="bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded border border-rose-200 dark:border-rose-800 font-mono">index.html</code> และนำรูปภาพ <code class="bg-white dark:bg-slate-800 px-1.5 py-0.5 rounded border border-rose-200 dark:border-rose-800 font-mono">profile.jpg</code> วางไว้ใน Folder เดียวกัน
+                </div>
+
+                <ol class="space-y-3 list-decimal list-inside text-xs sm:text-sm">
+                    <li class="pl-2">
+                        <strong>สร้าง Repository ใหม่บน GitHub:</strong> เข้าไปที่ <a href="https://github.com/new" target="_blank" class="text-rose-600 dark:text-rose-400 underline">github.com/new</a> ตั้งชื่อคลังไฟล์ เช่น <code class="bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded font-mono">my-portfolio</code>
+                    </li>
+                    <li class="pl-2">
+                        <strong>อัปโหลดไฟล์ (Upload Files):</strong> กดที่ปุ่ม <i>Upload an existing file</i> แล้วลากไฟล์ <code class="bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded font-mono">index.html</code> และ <code class="bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded font-mono">profile.jpg</code> ขึ้นไป จากนั้นกด <strong>Commit changes</strong>
+                    </li>
+                    <li class="pl-2">
+                        <strong>เปิดใช้งาน GitHub Pages:</strong>
+                        <ul class="pl-6 mt-1.5 space-y-1 list-disc text-slate-500 dark:text-slate-400 text-xs">
+                            <li>ไปที่เมนู <strong>Settings</strong> ของ Repository</li>
+                            <li>เลือกแถบเมนูด้านข้าง <strong>Pages</strong></li>
+                            <li>ใต้หัวข้อ <strong>Build and deployment</strong> -> เลือก Source เป็น <code class="bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded font-mono">Deploy from a branch</code></li>
+                            <li>เลือก Branch เป็น <code class="bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded font-mono">main</code> (หรือ master) แล้วกด <strong>Save</strong></li>
+                        </ul>
+                    </li>
+                    <li class="pl-2">
+                        <strong>เข้าชมเว็บไซต์:</strong> รอระบบประมวลผลประมาณ 1-2 นาที เว็บไซต์ของคุณจะออนไลน์ได้ที่ลิงก์ <code class="bg-slate-100 dark:bg-slate-700 px-1.5 py-0.5 rounded font-mono text-rose-600 dark:text-rose-400">https://your-username.github.io/my-portfolio/</code>
+                    </li>
+                </ol>
+            </div>
+
+            <div class="mt-6 pt-4 border-t border-slate-100 dark:border-slate-700 flex justify-end">
+                <button onclick="toggleModal('github-modal')" class="px-5 py-2.5 rounded-xl bg-slate-900 text-white dark:bg-slate-100 dark:text-slate-900 font-medium text-xs hover:opacity-90 transition-opacity">
+                    เข้าใจแล้ว / ปิดหน้าต่าง
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Functions -->
+    <script>
+        // Dark / Light Mode Script
+        const themeToggleBtn = document.getElementById('theme-toggle');
+        const themeIcon = document.getElementById('theme-icon');
+
+        if (localStorage.getItem('color-theme') === 'dark' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
+            document.documentElement.classList.add('dark');
+            themeIcon.classList.replace('fa-moon', 'fa-sun');
+        } else {
+            document.documentElement.classList.remove('dark');
+            themeIcon.classList.replace('fa-sun', 'fa-moon');
+        }
+
+        themeToggleBtn.addEventListener('click', function() {
+            if (document.documentElement.classList.contains('dark')) {
+                document.documentElement.classList.remove('dark');
+                localStorage.setItem('color-theme', 'light');
+                themeIcon.classList.replace('fa-sun', 'fa-moon');
+            } else {
+                document.documentElement.classList.add('dark');
+                localStorage.setItem('color-theme', 'dark');
+                themeIcon.classList.replace('fa-moon', 'fa-sun');
+            }
+        });
+
+        // Mobile Menu Toggle Script
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Modal Toggle Function
+        function toggleModal(modalId) {
+            const modal = document.getElementById(modalId);
+            if (modal.classList.contains('opacity-0')) {
+                modal.classList.remove('opacity-0', 'pointer-events-none');
+                modal.querySelector('.modal-content').classList.remove('scale-95');
+                modal.querySelector('.modal-content').classList.add('scale-100');
+            } else {
+                modal.classList.add('opacity-0', 'pointer-events-none');
+                modal.querySelector('.modal-content').classList.remove('scale-100');
+                modal.querySelector('.modal-content').classList.add('scale-95');
+            }
+        }
+
+        // Copy to Clipboard Function with Toast Notification
+        function copyToClipboard(text, message) {
+            // Fallback copy using textarea
+            const textarea = document.createElement('textarea');
+            textarea.value = text;
+            document.body.appendChild(textarea);
+            textarea.select();
+            document.execCommand('copy');
+            document.body.removeChild(textarea);
+
+            // Toast UI
+            const toast = document.getElementById('toast');
+            const toastMessage = document.getElementById('toast-message');
+            toastMessage.textContent = message || 'คัดลอกเรียบร้อยแล้ว';
+            
+            toast.classList.remove('translate-y-20', 'opacity-0');
+            toast.classList.add('translate-y-0', 'opacity-100');
+
+            setTimeout(() => {
+                toast.classList.remove('translate-y-0', 'opacity-100');
+                toast.classList.add('translate-y-20', 'opacity-0');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
